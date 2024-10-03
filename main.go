@@ -22,7 +22,7 @@ func main() {
 	mux.HandleFunc("/", handler)
 	logger("Starting server on port number: %d", portNum)
 
-	err := http.ListenAndServe(fmt.Sprintf(":%d", portNum), nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", portNum), mux)
 	if err != nil {
 		logger("Error starting on port number: %d", portNum)
 		return
