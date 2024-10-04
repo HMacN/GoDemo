@@ -1,4 +1,4 @@
-﻿package handlers
+package main
 
 import (
 	"GoDemo/internal/assert"
@@ -18,7 +18,8 @@ func TestSnippet_ReturnsSnippetId(t *testing.T) {
 		return
 	}
 
-	Snippet(responseRecorder, request)
+	app := NewApp()
+	app.Snippet(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
 	body, err := io.ReadAll(result.Body)

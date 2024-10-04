@@ -1,4 +1,4 @@
-﻿package handlers
+package main
 
 import (
 	"GoDemo/internal/assert"
@@ -17,7 +17,8 @@ func TestPing_ReturnsStatusOk(t *testing.T) {
 		return
 	}
 
-	Ping(responseRecorder, request)
+	app := NewApp()
+	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 
 	assert.Equal(t, http.StatusOK, result.StatusCode)
@@ -31,7 +32,8 @@ func TestPing_ReturnsMessagePong(t *testing.T) {
 		return
 	}
 
-	Ping(responseRecorder, request)
+	app := NewApp()
+	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
 	body, err := io.ReadAll(result.Body)
@@ -86,7 +88,8 @@ func TestPing_OnlyAllowsGet(t *testing.T) {
 			return
 		}
 
-		Ping(responseRecorder, request)
+		app := NewApp()
+		app.Ping(responseRecorder, request)
 		assert.Equal(t, test.expect, responseRecorder.Code)
 	}
 }
@@ -99,7 +102,8 @@ func TestPing_MethodNotAllowedText(t *testing.T) {
 		return
 	}
 
-	Ping(responseRecorder, request)
+	app := NewApp()
+	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
 	body, err := io.ReadAll(result.Body)
@@ -119,7 +123,8 @@ func TestPing_MethodNotAllowedHeader(t *testing.T) {
 		return
 	}
 
-	Ping(responseRecorder, request)
+	app := NewApp()
+	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result().Header.Get("Allow")
 
 	assert.Equal(t, http.MethodGet, result)

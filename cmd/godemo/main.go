@@ -1,15 +1,39 @@
-﻿package main
+package main
 
 import (
-	"GoDemo/internal/log"
-	"GoDemo/internal/webService"
+	"GoDemo/internal/logWrapper"
+	"flag"
+	"fmt"
+	"net/http"
 )
 
 func main() {
-	portNumber := 8080
-	err := webService.StartOnPort(portNumber)
+	portNumber := flag.Int("port", 8080, "The port number to listen on")
+	flag.Parse()
+
+	app := NewApp()
+	app.Logger.Info("Attempting server start on port %d", portNumber)
+	//server := &http.Server{
+	//	Addr: fmt.Sprintf(":%d", portNumber),
+	//}
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/ping", app.Ping)
+	mux.HandleFunc("/snippet", app.Snippet)
+	mux.HandleFunc("/", app.Home)
+	app.Logger.Info("Starting server on port number: %d", portNumber)
+
+	err := http.ListenAndServe(fmt.Sprintf(":%d", portNumber), mux)
 	if err != nil {
-		log.Write("Error starting on port number: %d", portNumber)
+		app.Logger.Error("Error starting on port number: %d", portNumber)
 		return
 	}
+}
+
+type Application struct {
+	Logger logWrapper.LogWrapper
+}
+
+func NewApp() Application {
+	return Application{Logger: logWrapper.New()}
 }

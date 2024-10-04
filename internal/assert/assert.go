@@ -1,4 +1,4 @@
-﻿package assert
+package assert
 
 import (
 	"fmt"

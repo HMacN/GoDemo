@@ -1,11 +1,11 @@
-﻿package handlers
+package main
 
 import (
 	"fmt"
 	"net/http"
 )
 
-func Home(w http.ResponseWriter, r *http.Request) {
+func (app *Application) Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
