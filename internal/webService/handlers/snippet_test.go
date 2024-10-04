@@ -1,7 +1,7 @@
 ﻿package handlers
 
 import (
-	"GoDemo/assert"
+	"GoDemo/internal/assert"
 	"net/http"
 	"net/http/httptest"
 	"strconv"

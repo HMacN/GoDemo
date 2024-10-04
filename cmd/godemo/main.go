@@ -1,8 +1,8 @@
 ﻿package main
 
 import (
-	"GoDemo/log"
-	"GoDemo/webService"
+	"GoDemo/internal/log"
+	"GoDemo/internal/webService"
 )
 
 func main() {
