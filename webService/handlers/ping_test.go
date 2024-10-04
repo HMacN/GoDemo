@@ -11,7 +11,6 @@ import (
 
 func TestPing_ReturnsStatusOk(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
-
 	request, err := http.NewRequest(http.MethodGet, "", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
@@ -26,7 +25,6 @@ func TestPing_ReturnsStatusOk(t *testing.T) {
 
 func TestPing_ReturnsMessagePong(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
-
 	request, err := http.NewRequest(http.MethodGet, "", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
@@ -95,7 +93,6 @@ func TestPing_OnlyAllowsGet(t *testing.T) {
 
 func TestPing_MethodNotAllowedText(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
-
 	request, err := http.NewRequest(http.MethodPost, "", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
@@ -112,4 +109,18 @@ func TestPing_MethodNotAllowedText(t *testing.T) {
 	}
 
 	assert.Equal(t, "Method Not Allowed", strings.Trim(string(body), "\n"))
+}
+
+func TestPing_MethodNotAllowedHeader(t *testing.T) {
+	responseRecorder := httptest.NewRecorder()
+	request, err := http.NewRequest(http.MethodPost, "", nil)
+	if err != nil {
+		assert.Fail(t, err.Error())
+		return
+	}
+
+	Ping(responseRecorder, request)
+	result := responseRecorder.Result().Header.Get("Allow")
+
+	assert.Equal(t, http.MethodGet, result)
 }
