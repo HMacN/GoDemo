@@ -1,4 +1,4 @@
-﻿package webService
+﻿package handlers
 
 import (
 	"GoDemo/assert"
@@ -17,7 +17,7 @@ func TestPing_ReturnsStatusOk(t *testing.T) {
 		return
 	}
 
-	handler(responseRecorder, request)
+	Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 
 	assert.Equal(t, result.StatusCode, http.StatusOK)
@@ -32,7 +32,7 @@ func TestPing_ReturnsMessagePong(t *testing.T) {
 		return
 	}
 
-	handler(responseRecorder, request)
+	Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
 	body, err := io.ReadAll(result.Body)

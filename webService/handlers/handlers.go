@@ -1,17 +1,11 @@
-﻿package webService
+﻿package handlers
 
 import (
 	"fmt"
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path == "/ping" {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("pong"))
-		return
-	}
+func Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
