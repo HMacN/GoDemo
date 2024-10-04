@@ -10,6 +10,7 @@ import (
 func StartOnPort(portNumber int) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/ping", handlers.Ping)
+	mux.HandleFunc("/snippet", handlers.Snippet)
 	mux.HandleFunc("/", handlers.Home)
 	log.Write("Starting server on port number: %d", portNumber)
 

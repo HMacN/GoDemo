@@ -9,12 +9,12 @@ var resetText = "\033[0m"
 var startRedText = "\033[31m"
 var startGreenText = "\033[32m"
 
-func Equal[T comparable](t *testing.T, actual, expected T) {
+func Equal[T comparable](t *testing.T, expected T, actual T) {
 	t.Helper()
 	if actual != expected {
 		testFailed(t, "\tACTUAL: %v\n\tEXPECTED: %v", actual, expected)
 	} else {
-		testPassed(t, "EXPECTED RESULT WAS RETURNED")
+		testPassed(t, "\tEXPECTED RESULT WAS RETURNED")
 	}
 }
 
