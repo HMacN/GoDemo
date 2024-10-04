@@ -7,11 +7,25 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
+	item := r.URL.Path[1:]
+	if item == "" {
+		item = "Go"
+	}
+
 	switch r.Method {
-	case "GET":
-		fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	case "POST":
+		fmt.Fprintf(w, "Hi there, I love %s!", item)
+		return
 	default:
-		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte("Method Not Allowed"))
+		return
 	}
 
 }
