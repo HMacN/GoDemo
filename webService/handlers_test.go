@@ -13,7 +13,8 @@ func TestPing_ReturnsStatusOk(t *testing.T) {
 
 	request, err := http.NewRequest(http.MethodGet, "/ping", nil)
 	if err != nil {
-		t.Fatal(err)
+		assert.Fail(t, err.Error())
+		return
 	}
 
 	handler(responseRecorder, request)
@@ -27,7 +28,8 @@ func TestPing_ReturnsMessagePong(t *testing.T) {
 
 	request, err := http.NewRequest(http.MethodGet, "/ping", nil)
 	if err != nil {
-		t.Fatal(err)
+		assert.Fail(t, err.Error())
+		return
 	}
 
 	handler(responseRecorder, request)
@@ -35,7 +37,8 @@ func TestPing_ReturnsMessagePong(t *testing.T) {
 	defer result.Body.Close()
 	body, err := io.ReadAll(result.Body)
 	if err != nil {
-		t.Fatal(err)
+		assert.Fail(t, err.Error())
+		return
 	}
 
 	assert.Equal(t, string(body), "pong")
