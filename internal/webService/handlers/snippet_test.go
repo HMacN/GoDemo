@@ -2,6 +2,7 @@
 
 import (
 	"GoDemo/internal/assert"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
@@ -18,7 +19,13 @@ func TestSnippet_ReturnsSnippetId(t *testing.T) {
 	}
 
 	Snippet(responseRecorder, request)
-	result := responseRecorder.Result().Header.Get("Id")
+	result := responseRecorder.Result()
+	defer result.Body.Close()
+	body, err := io.ReadAll(result.Body)
+	if err != nil {
+		assert.Fail(t, err.Error())
+		return
+	}
 
-	assert.Equal(t, strconv.Itoa(testId), result)
+	assert.Equal(t, strconv.Itoa(testId), string(body))
 }
