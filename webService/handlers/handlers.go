@@ -22,6 +22,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hi there, I love %s!", item)
 		return
 	default:
+		w.Header().Set("Allow", "POST")
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		w.Write([]byte("Method Not Allowed"))
 		return
