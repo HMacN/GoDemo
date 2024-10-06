@@ -17,13 +17,9 @@ func main() {
 	//	Addr: fmt.Sprintf(":%d", portNumber),
 	//}
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/ping", app.Ping)
-	mux.HandleFunc("/snippet", app.Snippet)
-	mux.HandleFunc("/", app.Home)
 	app.Logger.Info("Starting server on port number: %d", portNumber)
 
-	err := http.ListenAndServe(fmt.Sprintf(":%d", portNumber), mux)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", portNumber), app.Routes())
 	if err != nil {
 		app.Logger.Error("Error starting on port number: %d", portNumber)
 		return
