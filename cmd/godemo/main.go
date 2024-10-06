@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoDemo/internal/logWrapper"
+	"GoDemo/internal/app"
 	"flag"
 	"fmt"
 	"net/http"
@@ -11,7 +11,7 @@ func main() {
 	portNumber := flag.Int("port", 8080, "The port number to listen on")
 	flag.Parse()
 
-	app := NewApp()
+	app := app.NewApp()
 	app.Logger.Info("Attempting server start on port %d", portNumber)
 	//server := &http.Server{
 	//	Addr: fmt.Sprintf(":%d", portNumber),
@@ -28,12 +28,4 @@ func main() {
 		app.Logger.Error("Error starting on port number: %d", portNumber)
 		return
 	}
-}
-
-type Application struct {
-	Logger logWrapper.LogWrapper
-}
-
-func NewApp() Application {
-	return Application{Logger: logWrapper.New()}
 }
