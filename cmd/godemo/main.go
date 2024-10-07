@@ -7,30 +7,28 @@ import (
 	"net/http"
 )
 
+const LowestPort = 2_000
+const HighestPort = 10_000
+
 func main() {
-	portNumber := flag.Int("port", 8080, "The port number to listen on")
+	portNumber := flag.Int("port", LowestPort, "The port number to listen on")
 	flag.Parse()
 
-	app := app.NewApp()
-	app.Logger.Info("Attempting server start on port %d", *portNumber)
-	//server := &http.Server{
-	//	Addr: fmt.Sprintf(":%d", portNumber),
-	//}
-
-	app.Logger.Info("Starting server on port number: %d", *portNumber)
+	application := app.NewApp()
 
 	foundWorkingSocket := false
 	for !foundWorkingSocket {
-		err := http.ListenAndServe(fmt.Sprintf(":%d", *portNumber), app.Routes())
+		application.Logger.Info("Starting server on port %d", *portNumber)
+		err := http.ListenAndServe(fmt.Sprintf(":%d", *portNumber), application.Routes())
 		if err != nil {
-			app.Logger.Error("Failed attempt to connect on port number: %d", portNumber)
+			application.Logger.Error("Failed attempt to connect on port number: %d", portNumber)
 			*portNumber = *portNumber + 1
-		} else if !foundWorkingSocket && *portNumber > 9000 {
-			app.Logger.Error("Failed to connect to any port.  Stopping.")
+		} else if *portNumber > HighestPort {
+			application.Logger.Error("Failed to connect to any port.  Stopping.")
 			return
 		} else {
 			foundWorkingSocket = true
-			app.Logger.Info("Successfully ran server on port number: %d", *portNumber)
+			application.Logger.Info("Successfully ran server on port number: %d", *portNumber)
 		}
 	}
 }
