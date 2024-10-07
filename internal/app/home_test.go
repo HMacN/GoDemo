@@ -2,10 +2,11 @@
 
 import (
 	"GoDemo/internal/assert"
+	"bytes"
+	"html/template"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 )
 
@@ -32,11 +33,25 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 		return
 	}
 
-	expected, err := os.ReadFile(HomePageFilePath)
+	filePaths := []string{
+		TemplateBaseFilePath,
+		HomePageFilePath,
+	}
+
+	templateSet, err := template.ParseFiles(filePaths...)
 	if err != nil {
 		assert.Fail(t, err.Error())
 		return
 	}
+
+	buffer := new(bytes.Buffer)
+	err = templateSet.ExecuteTemplate(buffer, "base", nil)
+	if err != nil {
+		assert.Fail(t, err.Error())
+		return
+	}
+
+	expected := buffer.String()
 
 	app := NewApp()
 	app.Home(responseRecorder, request)

@@ -12,14 +12,19 @@ func (app *Application) Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	template, err := template.ParseFiles(HomePageFilePath)
+	filePaths := []string{
+		TemplateBaseFilePath,
+		HomePageFilePath,
+	}
+
+	templateSet, err := template.ParseFiles(filePaths...)
 	if err != nil {
 		app.Logger.Error(err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
-	err = template.Execute(w, nil)
+	err = templateSet.ExecuteTemplate(w, "base", nil)
 	if err != nil {
 		app.Logger.Error(err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

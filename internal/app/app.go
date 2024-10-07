@@ -2,6 +2,7 @@
 
 import "GoDemo/internal/logWrapper"
 
+const TemplateBaseFilePath = "../../ui/html/base.html"
 const HomePageFilePath = "../../ui/html/pages/home.html"
 
 type Application struct {
