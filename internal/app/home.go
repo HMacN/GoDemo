@@ -14,6 +14,7 @@ func (app *Application) Home(w http.ResponseWriter, r *http.Request) {
 
 	filePaths := []string{
 		app.TemplateBasePath,
+		app.PartialsNavPath,
 		app.HomePagePath,
 	}
 
