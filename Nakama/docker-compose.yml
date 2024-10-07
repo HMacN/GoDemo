@@ -7,7 +7,7 @@ services:
       - POSTGRES_DB=nakama
       - POSTGRES_PASSWORD=localdb
     volumes:
-      - data:/c/Users/HughMacNally/projects/docker:/nakama/data
+      - ./data:/nakama/data
     expose:
       - "8080"
       - "5432"

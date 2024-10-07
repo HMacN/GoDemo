@@ -1,11 +1,10 @@
 package logWrapper
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 )
-
-var LogHandler LogWrapper
 
 func New() LogWrapper {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
@@ -13,11 +12,11 @@ func New() LogWrapper {
 }
 
 func (wrapper *LogWrapper) Info(format string, a ...any) {
-	wrapper.logger.Info(format, a...)
+	wrapper.logger.Info(fmt.Sprintf(format, a...))
 }
 
 func (wrapper *LogWrapper) Error(format string, a ...any) {
-	LogHandler.logger.Error(format, a...)
+	wrapper.logger.Error(fmt.Sprintf(format, a...))
 }
 
 type LogWrapper struct {
