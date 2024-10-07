@@ -2,6 +2,8 @@
 
 import "GoDemo/internal/logWrapper"
 
+const HomePageFilePath = "../../ui/html/pages/home.html"
+
 type Application struct {
 	Logger logWrapper.LogWrapper
 }
