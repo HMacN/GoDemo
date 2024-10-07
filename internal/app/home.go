@@ -13,8 +13,8 @@ func (app *Application) Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filePaths := []string{
-		TemplateBaseFilePath,
-		HomePageFilePath,
+		app.TemplateBasePath,
+		app.HomePagePath,
 	}
 
 	templateSet, err := template.ParseFiles(filePaths...)

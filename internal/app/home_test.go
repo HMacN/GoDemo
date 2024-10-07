@@ -33,9 +33,20 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 		return
 	}
 
+	app := NewApp()
+	app.Home(responseRecorder, request)
+	response := responseRecorder.Result()
+	defer response.Body.Close()
+
+	result, err := io.ReadAll(response.Body)
+	if err != nil {
+		assert.Fail(t, err.Error())
+		return
+	}
+
 	filePaths := []string{
-		TemplateBaseFilePath,
-		HomePageFilePath,
+		app.TemplateBasePath,
+		app.HomePagePath,
 	}
 
 	templateSet, err := template.ParseFiles(filePaths...)
@@ -52,17 +63,6 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 	}
 
 	expected := buffer.String()
-
-	app := NewApp()
-	app.Home(responseRecorder, request)
-	response := responseRecorder.Result()
-	defer response.Body.Close()
-
-	result, err := io.ReadAll(response.Body)
-	if err != nil {
-		assert.Fail(t, err.Error())
-		return
-	}
 
 	assert.Equal(t, string(expected), string(result))
 }
