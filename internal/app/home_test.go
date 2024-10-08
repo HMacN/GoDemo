@@ -45,7 +45,6 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 	}
 
 	filePaths := []string{
-		// TODO: Ask Craig - is querying the running app for info like this acceptable in a test?  What should be done instead?  Flat file with the info?
 		app.TemplateBasePath,
 		app.PartialsNavPath,
 		app.HomePagePath,
