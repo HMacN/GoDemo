@@ -65,7 +65,6 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 	}
 
 	expected := buffer.String()
-
 	assert.Equal(t, string(expected), string(result))
 }
 
