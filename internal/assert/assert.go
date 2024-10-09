@@ -18,6 +18,24 @@ func Equal[T comparable](t *testing.T, expected T, actual T) {
 	}
 }
 
+func True(t *testing.T, actual bool) {
+	t.Helper()
+	if !actual {
+		testFailed(t, "\tASSERTED TRUE, WAS FALSE")
+	} else {
+		testPassed(t, "\tEXPECTED RESULT WAS RETURNED")
+	}
+}
+
+func False(t *testing.T, actual bool) {
+	t.Helper()
+	if actual {
+		testFailed(t, "\tASSERTED FALSE, WAS TRUE")
+	} else {
+		testPassed(t, "\tEXPECTED RESULT WAS RETURNED")
+	}
+}
+
 func Fail(t *testing.T, format string, message ...any) {
 	testFailed(t, format, message...)
 }
