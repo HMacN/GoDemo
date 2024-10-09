@@ -6,16 +6,16 @@ import (
 	"log"
 )
 
-const logFilePath string = "./logs/myLog.log"
+const logFilePath string = "/../../logs/myLog.log"
 const stdOutFilePath string = "stdout"
 
-func New() LogWrapper {
+func New(rootPath string) LogWrapper {
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	config.OutputPaths = []string{
 		stdOutFilePath,
-		logFilePath,
+		rootPath + logFilePath,
 	}
 
 	logger, err := config.Build()

@@ -2,6 +2,7 @@
 
 import (
 	"GoDemo/internal/plog"
+	"net/http"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -27,10 +28,31 @@ func NewApp() Application {
 	)
 
 	return Application{
-		Logger:           plog.New(),
+		Logger:           plog.New(appPath),
 		TemplateBasePath: strings.Join([]string{appPath, TemplateBaseFilePath}, "\\"),
 		PartialsNavPath:  strings.Join([]string{appPath, PartialsNavFilePath}, "\\"),
 		HomePagePath:     strings.Join([]string{appPath, HomePageFilePath}, "\\"),
 		StaticPath:       strings.Join([]string{appPath, StaticFilePath}, "\\"),
 	}
+}
+
+func (app *Application) serverError(w http.ResponseWriter, r *http.Request, err error) {
+	var (
+		method = r.Method
+		uri    = r.URL.RequestURI()
+	)
+
+	app.Logger.Error(
+		err.Error(),
+		plog.KV{Key: "method", Value: method},
+		plog.KV{Key: "uri", Value: uri})
+	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+}
+
+func (app *Application) clientError(w http.ResponseWriter, status int) {
+	http.Error(w, http.StatusText(status), status)
+}
+
+func (app *Application) notFound(w http.ResponseWriter) {
+	app.clientError(w, http.StatusNotFound)
 }

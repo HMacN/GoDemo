@@ -11,3 +11,19 @@ main.main
 runtime.main
 	C:/Program Files/Go/src/runtime/proc.go:272
 2024-10-09T17:47:58.014+0100	[34mINFO[0m	godemo/main.go:28	Starting server...	{"port": 2000}
+2024-10-09T18:47:45.325+0100	[34mINFO[0m	app/ping.go:14	Ping!
+2024-10-09T18:47:45.332+0100	[34mINFO[0m	app/ping.go:14	Ping!
+2024-10-09T18:47:45.337+0100	[34mINFO[0m	app/ping.go:14	Ping!
+2024-10-09T18:48:20.799+0100	[35mDEBUG[0m	godemo/main.go:21	A test debug log...
+2024-10-09T18:48:20.802+0100	[34mINFO[0m	godemo/main.go:22	A test info log...
+2024-10-09T18:48:20.804+0100	[33mWARN[0m	godemo/main.go:23	A test warn log...
+main.main
+	C:/Users/HughMacNally/dev/GoDemo/cmd/godemo/main.go:23
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:272
+2024-10-09T18:48:20.806+0100	[31mERROR[0m	godemo/main.go:24	A test error log...
+main.main
+	C:/Users/HughMacNally/dev/GoDemo/cmd/godemo/main.go:24
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:272
+2024-10-09T18:48:20.809+0100	[34mINFO[0m	godemo/main.go:28	Starting server...	{"port": 2000}
