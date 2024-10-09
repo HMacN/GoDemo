@@ -1,0 +1,13 @@
+2024-10-09T17:47:57.998+0100	[35mDEBUG[0m	godemo/main.go:21	A test debug log...
+2024-10-09T17:47:58.002+0100	[34mINFO[0m	godemo/main.go:22	A test info log...
+2024-10-09T17:47:58.006+0100	[33mWARN[0m	godemo/main.go:23	A test warn log...
+main.main
+	C:/Users/HughMacNally/dev/GoDemo/cmd/godemo/main.go:23
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:272
+2024-10-09T17:47:58.010+0100	[31mERROR[0m	godemo/main.go:24	A test error log...
+main.main
+	C:/Users/HughMacNally/dev/GoDemo/cmd/godemo/main.go:24
+runtime.main
+	C:/Program Files/Go/src/runtime/proc.go:272
+2024-10-09T17:47:58.014+0100	[34mINFO[0m	godemo/main.go:28	Starting server...	{"port": 2000}
