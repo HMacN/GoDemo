@@ -11,34 +11,30 @@ import (
 )
 
 func TestApplicationHome_ReturnsOk(t *testing.T) {
+	// Arrange
 	responseRecorder := httptest.NewRecorder()
+	app := NewApp()
+
+	// Act
 	request, err := http.NewRequest(http.MethodGet, "/", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
 		return
 	}
 
-	app := NewApp()
 	app.Home(responseRecorder, request)
 	result := responseRecorder.Result()
 
+	// Assert
 	assert.Equal(t, http.StatusOK, result.StatusCode)
 }
 
 func TestApplicationHome_ReturnsHomepage(t *testing.T) {
-	responseRecorder := httptest.NewRecorder()
-	request, err := http.NewRequest(http.MethodGet, "/", nil)
-	if err != nil {
-		assert.Fail(t, err.Error())
-		return
-	}
-
+	// Arrange
 	app := NewApp()
-	app.Home(responseRecorder, request)
-	response := responseRecorder.Result()
-	defer response.Body.Close()
+	responseRecorder := httptest.NewRecorder()
 
-	result, err := io.ReadAll(response.Body)
+	request, err := http.NewRequest(http.MethodGet, "/", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
 		return
@@ -64,10 +60,25 @@ func TestApplicationHome_ReturnsHomepage(t *testing.T) {
 	}
 
 	expected := buffer.String()
+
+	// Act
+	app.Home(responseRecorder, request)
+	response := responseRecorder.Result()
+	defer response.Body.Close()
+
+	result, err := io.ReadAll(response.Body)
+	if err != nil {
+		assert.Fail(t, err.Error())
+		return
+	}
+
+	// Assert
 	assert.Equal(t, string(expected), string(result))
 }
 
 func TestApplicationHome_CatchAllUnauthorised(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodGet, "/unauthorised/url", nil)
 	if err != nil {
@@ -75,9 +86,10 @@ func TestApplicationHome_CatchAllUnauthorised(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Home(responseRecorder, request)
 	result := responseRecorder.Result()
 
+	// Assert
 	assert.Equal(t, http.StatusNotFound, result.StatusCode)
 }

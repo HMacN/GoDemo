@@ -10,6 +10,8 @@ import (
 )
 
 func TestSnippet_ReturnsSnippetId(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	testId := 1
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodGet, "/?id="+strconv.Itoa(testId), nil)
@@ -18,7 +20,7 @@ func TestSnippet_ReturnsSnippetId(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Snippet(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
@@ -28,5 +30,6 @@ func TestSnippet_ReturnsSnippetId(t *testing.T) {
 		return
 	}
 
+	// Assert
 	assert.Equal(t, strconv.Itoa(testId), string(body))
 }

@@ -10,6 +10,8 @@ import (
 )
 
 func TestApplicationPing_ReturnsStatusOk(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodGet, "", nil)
 	if err != nil {
@@ -17,14 +19,17 @@ func TestApplicationPing_ReturnsStatusOk(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 
+	// Assert
 	assert.Equal(t, http.StatusOK, result.StatusCode)
 }
 
 func TestApplicationPing_ReturnsMessagePong(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodGet, "", nil)
 	if err != nil {
@@ -32,7 +37,7 @@ func TestApplicationPing_ReturnsMessagePong(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
@@ -42,10 +47,12 @@ func TestApplicationPing_ReturnsMessagePong(t *testing.T) {
 		return
 	}
 
+	// Assert
 	assert.Equal(t, "pong", string(body))
 }
 
 func TestApplicationPing_OnlyAllowsGet(t *testing.T) {
+	//Arrange
 	tests := []struct {
 		method string
 		expect int
@@ -80,6 +87,7 @@ func TestApplicationPing_OnlyAllowsGet(t *testing.T) {
 		},
 	}
 
+	// Act
 	for _, test := range tests {
 		request, err := http.NewRequest(test.method, "", nil)
 		responseRecorder := httptest.NewRecorder()
@@ -90,11 +98,15 @@ func TestApplicationPing_OnlyAllowsGet(t *testing.T) {
 
 		app := NewApp()
 		app.Ping(responseRecorder, request)
+
+		// Assert
 		assert.Equal(t, test.expect, responseRecorder.Code)
 	}
 }
 
 func TestApplicationPing_MethodNotAllowedText(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodPost, "", nil)
 	if err != nil {
@@ -102,7 +114,7 @@ func TestApplicationPing_MethodNotAllowedText(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result()
 	defer result.Body.Close()
@@ -112,10 +124,13 @@ func TestApplicationPing_MethodNotAllowedText(t *testing.T) {
 		return
 	}
 
+	// Assert
 	assert.Equal(t, "Method Not Allowed", strings.Trim(string(body), "\n"))
 }
 
 func TestApplicationPing_MethodNotAllowedHeader(t *testing.T) {
+	// Arrange
+	app := NewApp()
 	responseRecorder := httptest.NewRecorder()
 	request, err := http.NewRequest(http.MethodPost, "", nil)
 	if err != nil {
@@ -123,9 +138,10 @@ func TestApplicationPing_MethodNotAllowedHeader(t *testing.T) {
 		return
 	}
 
-	app := NewApp()
+	// Act
 	app.Ping(responseRecorder, request)
 	result := responseRecorder.Result().Header.Get("Allow")
 
+	// Assert
 	assert.Equal(t, http.MethodGet, result)
 }
