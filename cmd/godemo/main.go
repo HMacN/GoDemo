@@ -16,6 +16,12 @@ func main() {
 
 	application := app.NewApp()
 
+	// Dirty test of the logger:
+	application.Logger.Debug("A test debug log...")
+	application.Logger.Info("A test info log...")
+	application.Logger.Warn("A test warn log...")
+	application.Logger.Error("A test error log...")
+
 	foundWorkingSocket := false
 	for !foundWorkingSocket {
 		application.Logger.Info("Starting server on port %d", *portNumber)
