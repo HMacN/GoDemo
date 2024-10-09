@@ -1,7 +1,7 @@
 ﻿package app
 
 import (
-	"GoDemo/internal/logWrapper"
+	"GoDemo/internal/plog"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -13,7 +13,7 @@ const HomePageFilePath = "..\\..\\ui\\html\\pages\\home.html"
 const StaticFilePath = "..\\..\\ui\\static\\"
 
 type Application struct {
-	Logger           logWrapper.LogWrapper
+	Logger           plog.LogWrapper
 	TemplateBasePath string
 	PartialsNavPath  string
 	HomePagePath     string
@@ -27,7 +27,7 @@ func NewApp() Application {
 	)
 
 	return Application{
-		Logger:           logWrapper.New(),
+		Logger:           plog.New(),
 		TemplateBasePath: strings.Join([]string{appPath, TemplateBaseFilePath}, "\\"),
 		PartialsNavPath:  strings.Join([]string{appPath, PartialsNavFilePath}, "\\"),
 		HomePagePath:     strings.Join([]string{appPath, HomePageFilePath}, "\\"),

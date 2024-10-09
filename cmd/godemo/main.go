@@ -2,6 +2,7 @@ package main
 
 import (
 	"GoDemo/internal/app"
+	"GoDemo/internal/plog"
 	"flag"
 	"fmt"
 	"net/http"
@@ -24,17 +25,17 @@ func main() {
 
 	foundWorkingSocket := false
 	for !foundWorkingSocket {
-		application.Logger.Info("Starting server on port %d", *portNumber)
+		application.Logger.Info("Starting server...", plog.KV{Key: "port", Value: *portNumber})
 		err := http.ListenAndServe(fmt.Sprintf(":%d", *portNumber), application.Routes())
 		if err != nil {
-			application.Logger.Error("Failed attempt to connect on port number: %d", portNumber)
+			application.Logger.Error("Failed attempt to connect...", plog.KV{Key: "port", Value: *portNumber})
 			*portNumber = *portNumber + 1
 		} else if *portNumber > HighestPort {
 			application.Logger.Error("Failed to connect to any port.  Stopping.")
 			return
 		} else {
 			foundWorkingSocket = true
-			application.Logger.Info("Successfully ran server on port number: %d", *portNumber)
+			application.Logger.Info("Successfully ran server.", plog.KV{Key: "port", Value: *portNumber})
 		}
 	}
 }
