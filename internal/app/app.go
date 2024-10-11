@@ -2,6 +2,7 @@
 
 import (
 	"GoDemo/internal/plog"
+	"database/sql"
 	"net/http"
 	"path/filepath"
 	"runtime"
@@ -15,6 +16,7 @@ const StaticFilePath = "..\\..\\ui\\static\\"
 
 type Application struct {
 	Logger           plog.LogWrapper
+	Database         *sql.DB
 	TemplateBasePath string
 	PartialsNavPath  string
 	HomePagePath     string
@@ -29,6 +31,7 @@ func NewApp() Application {
 
 	return Application{
 		Logger:           plog.New(appPath),
+		Database:         nil,
 		TemplateBasePath: strings.Join([]string{appPath, TemplateBaseFilePath}, "\\"),
 		PartialsNavPath:  strings.Join([]string{appPath, PartialsNavFilePath}, "\\"),
 		HomePagePath:     strings.Join([]string{appPath, HomePageFilePath}, "\\"),
