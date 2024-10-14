@@ -1,0 +1,12 @@
+2024-10-14T09:11:04.781+0100	[35mDEBUG[0m	plog/logs_test.go:25	Testing the logger CLI output.
+2024-10-14T09:11:04.790+0100	[34mINFO[0m	plog/logs_test.go:26	Testing the logger CLI output.
+2024-10-14T09:11:04.798+0100	[33mWARN[0m	plog/logs_test.go:27	Testing the logger CLI output.
+GoDemo/internal/plog.TestLogWrapper_CliOutput
+	C:/Users/HughMacNally/dev/GoDemo/internal/plog/logs_test.go:27
+testing.tRunner
+	C:/Program Files/Go/src/testing/testing.go:1690
+2024-10-14T09:11:04.808+0100	[31mERROR[0m	plog/logs_test.go:28	Testing the logger CLI output.
+GoDemo/internal/plog.TestLogWrapper_CliOutput
+	C:/Users/HughMacNally/dev/GoDemo/internal/plog/logs_test.go:28
+testing.tRunner
+	C:/Program Files/Go/src/testing/testing.go:1690

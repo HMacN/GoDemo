@@ -9,10 +9,12 @@ import (
 	"strings"
 )
 
-const TemplateBaseFilePath = "..\\..\\ui\\html\\base.html"
-const PartialsNavFilePath = "..\\..\\ui\\html\\partials\\nav.html"
-const HomePageFilePath = "..\\..\\ui\\html\\pages\\home.html"
-const StaticFilePath = "..\\..\\ui\\static\\"
+const TemplateBaseFilePath = "ui\\html\\base.html"
+const PartialsNavFilePath = "ui\\html\\partials\\nav.html"
+const HomePageFilePath = "ui\\html\\pages\\home.html"
+const StaticFilePath = "ui\\static\\"
+const PathToProjectRoot = "..\\..\\..\\"
+const PathToLogFile = "\\logs"
 
 type Application struct {
 	Logger           plog.LogWrapper
@@ -26,16 +28,18 @@ type Application struct {
 func NewApp() Application {
 	var (
 		_, callingFile, _, _ = runtime.Caller(0)
-		appPath              = filepath.Dir(callingFile)
+		thisFilePath         = filepath.Dir(callingFile)
 	)
 
+	rootPath := filepath.Clean(thisFilePath + PathToProjectRoot)
+
 	return Application{
-		Logger:           plog.New(appPath),
+		Logger:           plog.New(rootPath+PathToLogFile, "myLog", "log"),
 		Database:         nil,
-		TemplateBasePath: strings.Join([]string{appPath, TemplateBaseFilePath}, "\\"),
-		PartialsNavPath:  strings.Join([]string{appPath, PartialsNavFilePath}, "\\"),
-		HomePagePath:     strings.Join([]string{appPath, HomePageFilePath}, "\\"),
-		StaticPath:       strings.Join([]string{appPath, StaticFilePath}, "\\"),
+		TemplateBasePath: strings.Join([]string{rootPath, TemplateBaseFilePath}, "\\"),
+		PartialsNavPath:  strings.Join([]string{rootPath, PartialsNavFilePath}, "\\"),
+		HomePagePath:     strings.Join([]string{rootPath, HomePageFilePath}, "\\"),
+		StaticPath:       strings.Join([]string{rootPath, StaticFilePath}, "\\"),
 	}
 }
 
