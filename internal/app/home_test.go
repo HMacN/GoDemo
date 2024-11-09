@@ -13,6 +13,7 @@ func TestApplicationHome_ReturnsOk(t *testing.T) {
 	// Arrange
 	responseRecorder := httptest.NewRecorder()
 	app := NewApp()
+	srv := app.Routes()
 
 	request, err := http.NewRequest(http.MethodGet, "/", nil)
 	if err != nil {
@@ -21,7 +22,7 @@ func TestApplicationHome_ReturnsOk(t *testing.T) {
 	}
 
 	// Act
-	app.Home(responseRecorder, request)
+	srv.ServeHTTP(responseRecorder, request)
 
 	// Assert
 	result := responseRecorder.Result()
