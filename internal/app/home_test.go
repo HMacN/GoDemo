@@ -14,17 +14,17 @@ func TestApplicationHome_ReturnsOk(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 	app := NewApp()
 
-	// Act
 	request, err := http.NewRequest(http.MethodGet, "/", nil)
 	if err != nil {
 		assert.Fail(t, err.Error())
 		return
 	}
 
+	// Act
 	app.Home(responseRecorder, request)
-	result := responseRecorder.Result()
 
 	// Assert
+	result := responseRecorder.Result()
 	assert.Equal(t, http.StatusOK, result.StatusCode)
 }
 
